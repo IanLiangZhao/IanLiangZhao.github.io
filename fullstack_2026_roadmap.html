@@ -1,0 +1,204 @@
+
+<style>
+  * { box-sizing: border-box; }
+  h2.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+  .road { padding: 1rem 0 2rem; }
+  .phase { margin-bottom: 2rem; }
+  .phase-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; cursor: pointer; user-select: none; }
+  .phase-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; flex-shrink: 0; }
+  .phase-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+  .phase-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 1px; }
+  .skills { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+  .skill { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 10px 12px; position: relative; cursor: pointer; transition: border-color .15s; }
+  .skill:hover { border-color: var(--color-border-secondary); }
+  .skill-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 2px; }
+  .skill-why { font-size: 11px; color: var(--color-text-secondary); line-height: 1.4; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 4px; margin-bottom: 5px; }
+  .tag-hot { background: #FAECE7; color: #993C1D; }
+  .tag-core { background: #E6F1FB; color: #185FA5; }
+  .tag-new { background: #EAF3DE; color: #3B6D11; }
+  .tag-ai { background: #EEEDFE; color: #3C3489; }
+  .tag-ops { background: #FAEEDA; color: #854F0B; }
+  @media (prefers-color-scheme: dark) {
+    .tag-hot { background: #4A1B0C; color: #F0997B; }
+    .tag-core { background: #042C53; color: #85B7EB; }
+    .tag-new { background: #173404; color: #97C459; }
+    .tag-ai { background: #26215C; color: #AFA9EC; }
+    .tag-ops { background: #412402; color: #EF9F27; }
+  }
+  .connector { width: 2px; height: 20px; background: var(--color-border-tertiary); margin: 0 0 0 15px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-secondary); }
+  .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .filter-btn { font-size: 11px; padding: 4px 10px; border: 0.5px solid var(--color-border-secondary); border-radius: 20px; background: transparent; color: var(--color-text-secondary); cursor: pointer; transition: all .15s; }
+  .filter-btn.active { background: var(--color-text-primary); color: var(--color-background-primary); border-color: var(--color-text-primary); }
+  .skill.dimmed { opacity: 0.25; }
+</style>
+
+<h2 class="sr-only">2026 Full Stack Web Developer Study Roadmap — six phases from foundations to AI integration, covering frontend, backend, DevOps, and modern tooling.</h2>
+
+<div class="road">
+  <div class="filter-bar" id="filters">
+    <button class="filter-btn active" data-tag="all">All</button>
+    <button class="filter-btn" data-tag="core">Core</button>
+    <button class="filter-btn" data-tag="hot">Trending</button>
+    <button class="filter-btn" data-tag="ai">AI/LLM</button>
+    <button class="filter-btn" data-tag="new">Emerging</button>
+    <button class="filter-btn" data-tag="ops">DevOps</button>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="tag tag-core">Core</span> foundational skill</div>
+    <div class="legend-item"><span class="tag tag-hot">Trending</span> high demand in 2026</div>
+    <div class="legend-item"><span class="tag tag-ai">AI/LLM</span> AI-era skill</div>
+    <div class="legend-item"><span class="tag tag-new">Emerging</span> worth learning now</div>
+    <div class="legend-item"><span class="tag tag-ops">DevOps</span> infra / deployment</div>
+  </div>
+
+  <div id="phases"></div>
+</div>
+
+<script>
+const phases = [
+  {
+    title: "Phase 1 — Foundations",
+    sub: "Weeks 1–8 · No shortcuts here",
+    color: "#185FA5", bg: "#E6F1FB", bgDark: "#042C53",
+    skills: [
+      { name: "HTML & CSS", why: "Structure + layout; grid & flexbox are non-negotiable", tags: ["core"] },
+      { name: "JavaScript (ES2025+)", why: "Closures, async/await, modules, optional chaining", tags: ["core"] },
+      { name: "Git & GitHub", why: "Branching, PRs, rebasing — daily use", tags: ["core"] },
+      { name: "Terminal basics", why: "Navigate, scripts, pipes; you'll live here", tags: ["core"] },
+      { name: "HTTP fundamentals", why: "Methods, status codes, headers, cookies", tags: ["core"] },
+      { name: "Accessibility (a11y)", why: "WCAG 2.2 — increasingly a legal requirement", tags: ["core", "hot"] },
+    ]
+  },
+  {
+    title: "Phase 2 — Frontend",
+    sub: "Weeks 9–20 · Pick React or Vue, go deep",
+    color: "#3C3489", bg: "#EEEDFE", bgDark: "#26215C",
+    skills: [
+      { name: "React 19", why: "Server components, actions, use() hook — major shift", tags: ["core", "hot"] },
+      { name: "TypeScript", why: "Industry standard; non-optional for any serious role", tags: ["core", "hot"] },
+      { name: "Next.js 15", why: "App router, PPR, server actions — the React meta-framework", tags: ["hot"] },
+      { name: "CSS architecture", why: "Tailwind v4, CSS modules, design tokens", tags: ["core"] },
+      { name: "State management", why: "Zustand / Jotai; Redux only if team uses it", tags: ["core"] },
+      { name: "Testing (Vitest + Playwright)", why: "Unit + E2E; hiring bars rising in 2026", tags: ["core"] },
+      { name: "Web performance", why: "Core Web Vitals, INP metric, lazy loading", tags: ["hot"] },
+      { name: "PWA / Web APIs", why: "Offline, push, share, camera — closes native gap", tags: ["new"] },
+    ]
+  },
+  {
+    title: "Phase 3 — Backend",
+    sub: "Weeks 21–32 · APIs, data, auth",
+    color: "#0F6E56", bg: "#E1F5EE", bgDark: "#04342C",
+    skills: [
+      { name: "Node.js + Express / Hono", why: "Hono is the lean 2026 favourite for edge", tags: ["core", "hot"] },
+      { name: "REST API design", why: "Versioning, error shapes, pagination patterns", tags: ["core"] },
+      { name: "GraphQL", why: "Still dominant at scale; know the tradeoffs", tags: ["core"] },
+      { name: "PostgreSQL", why: "Primary relational DB; learn indexes + query plans", tags: ["core"] },
+      { name: "Redis", why: "Caching, sessions, pub/sub, rate limiting", tags: ["core"] },
+      { name: "Auth (OAuth 2 / OIDC)", why: "JWTs, refresh tokens, PKCE — do it right", tags: ["core"] },
+      { name: "tRPC", why: "End-to-end typesafe APIs — surging adoption", tags: ["hot"] },
+      { name: "WebSockets / SSE", why: "Real-time features; SSE simpler for one-way", tags: ["core"] },
+    ]
+  },
+  {
+    title: "Phase 4 — AI Integration",
+    sub: "Weeks 33–40 · The 2026 differentiator",
+    color: "#534AB7", bg: "#EEEDFE", bgDark: "#26215C",
+    skills: [
+      { name: "LLM APIs (Anthropic / OpenAI)", why: "Prompting, streaming, tool use, context windows", tags: ["ai", "hot"] },
+      { name: "Retrieval-Augmented Generation", why: "Embeddings + vector search + generation pipeline", tags: ["ai", "hot"] },
+      { name: "Vector databases", why: "pgvector, Pinecone, Qdrant — choose one deeply", tags: ["ai", "new"] },
+      { name: "AI SDK (Vercel AI SDK)", why: "useChat, useCompletion hooks; streaming UI patterns", tags: ["ai", "hot"] },
+      { name: "Prompt engineering", why: "System prompts, few-shot, CoT — real craft", tags: ["ai"] },
+      { name: "Agents & tool use", why: "Function calling, MCP protocol, agentic loops", tags: ["ai", "new"] },
+    ]
+  },
+  {
+    title: "Phase 5 — DevOps & Cloud",
+    sub: "Weeks 41–50 · Ship and operate it",
+    color: "#854F0B", bg: "#FAEEDA", bgDark: "#412402",
+    skills: [
+      { name: "Docker", why: "Containerise everything; compose for local dev", tags: ["ops", "core"] },
+      { name: "CI/CD (GitHub Actions)", why: "Lint, test, build, deploy on every PR", tags: ["ops", "core"] },
+      { name: "Cloud basics (AWS / GCP)", why: "S3, Lambda, RDS, IAM — enough to self-ship", tags: ["ops", "core"] },
+      { name: "Vercel / Fly.io", why: "Fastest path to production for most stacks", tags: ["ops", "hot"] },
+      { name: "Observability", why: "Logs (Pino), traces (OpenTelemetry), metrics", tags: ["ops"] },
+      { name: "Security basics", why: "OWASP Top 10, HTTPS, CSP headers, secrets mgmt", tags: ["ops", "core"] },
+    ]
+  },
+  {
+    title: "Phase 6 — Advanced & Specialise",
+    sub: "Weeks 51+ · Pick your depth",
+    color: "#993C1D", bg: "#FAECE7", bgDark: "#4A1B0C",
+    skills: [
+      { name: "System design", why: "Caching strategies, queues, eventual consistency", tags: ["core"] },
+      { name: "Micro-frontends", why: "Module federation for large-org codebases", tags: ["new"] },
+      { name: "Edge computing", why: "Cloudflare Workers, Deno Deploy — latency wins", tags: ["hot", "new"] },
+      { name: "Mobile (React Native / Expo)", why: "One codebase, iOS + Android — 2026 viable", tags: ["new"] },
+      { name: "Web3 / WASM basics", why: "Optional; worth knowing what they are", tags: ["new"] },
+      { name: "Open source contribution", why: "Portfolio, networking, and learning accelerant", tags: ["core"] },
+    ]
+  }
+];
+
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+let activeTag = 'all';
+
+function render() {
+  const container = document.getElementById('phases');
+  container.innerHTML = '';
+  phases.forEach((p, i) => {
+    const ph = document.createElement('div');
+    ph.className = 'phase';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'phase-header';
+    hdr.innerHTML = `
+      <div class="phase-dot" style="background:${dark ? p.bgDark : p.bg};color:${p.color}">${i+1}</div>
+      <div><div class="phase-title">${p.title}</div><div class="phase-sub">${p.sub}</div></div>
+    `;
+    ph.appendChild(hdr);
+
+    const grid = document.createElement('div');
+    grid.className = 'skills';
+
+    p.skills.forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'skill';
+      const matchesFilter = activeTag === 'all' || s.tags.includes(activeTag);
+      if (!matchesFilter) card.classList.add('dimmed');
+
+      const tagsHtml = s.tags.map(t => `<span class="tag tag-${t}">${t === 'hot' ? 'Trending' : t === 'core' ? 'Core' : t === 'ai' ? 'AI/LLM' : t === 'new' ? 'Emerging' : 'DevOps'}</span>`).join(' ');
+      card.innerHTML = `<div>${tagsHtml}</div><p class="skill-name">${s.name}</p><p class="skill-why">${s.why}</p>`;
+      card.onclick = () => {
+        const q = `Tell me more about learning ${s.name} as a full stack developer in 2026`;
+        sendPrompt(q);
+      };
+      grid.appendChild(card);
+    });
+
+    ph.appendChild(grid);
+
+    if (i < phases.length - 1) {
+      const conn = document.createElement('div');
+      conn.className = 'connector';
+      ph.appendChild(conn);
+    }
+
+    container.appendChild(ph);
+  });
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  activeTag = btn.dataset.tag;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+  render();
+});
+
+render();
+</script>
